@@ -1,0 +1,21 @@
+# Entornos virtuales y cachés de Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+
+# Variables de entorno locales (nunca versionar credenciales reales)
+.env
+
+# Datos persistentes de Oracle montados por Docker Compose
+oradata/
+
+# Editores / IDEs
+.idea/
+.vscode/
+
+# Sistema
+.DS_Store
+Thumbs.db

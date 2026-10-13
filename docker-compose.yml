@@ -1,0 +1,39 @@
+services:
+  oracle:
+    image: gvenzl/oracle-free:23-slim
+    container_name: evalai-oracle
+    environment:
+      # Contraseña de SYS/SYSTEM. Solo para desarrollo local (ver .env.example).
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD}
+      # Crea automáticamente el usuario de aplicación en el PDB por defecto (FREEPDB1).
+      APP_USER: ${ORACLE_USER}
+      APP_USER_PASSWORD: ${ORACLE_PASSWORD}
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  api:
+    build: .
+    container_name: evalai-api
+    env_file:
+      - .env
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./alembic:/app/alembic
+      - ./tests:/app/tests
+    depends_on:
+      oracle:
+        condition: service_healthy
+
+volumes:
+  oracle_data:

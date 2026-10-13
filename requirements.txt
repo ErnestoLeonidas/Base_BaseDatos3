@@ -1,0 +1,10 @@
+fastapi>=0.115,<0.116
+uvicorn[standard]>=0.34,<0.35
+SQLAlchemy>=2.0,<2.1
+# "python-oracledb" (driver thin de Oracle); el paquete en PyPI se llama "oracledb"
+oracledb>=2.5,<27.0
+pydantic>=2.9,<3.0
+pydantic-settings>=2.6,<3.0
+python-dotenv>=1.0,<2.0
+argon2-cffi>=23.1,<24.0
+alembic>=1.14,<2.0
